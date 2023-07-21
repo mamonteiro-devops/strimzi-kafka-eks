@@ -1,0 +1,44 @@
+external-dns:
+  image:
+    registry: docker.io
+    repository: bitnami/external-dns
+    tag: 0.13.4-debian-11-r2
+    pullPolicy: IfNotPresent
+
+  # provider: aws
+  provider: ovh
+
+  # aws:
+  #   region: "us-east-1"
+  #   credentials:
+  #     accessKey: "AKIARRRZCEXAYERWWOMW"
+  #     secretKey: "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"
+  #   roleArn: "arn:aws:iam::106420118977:role/eks-node-group-role"
+
+  ovh:
+    ## @param ovh.consumerKey When using the OVH provider, specify the existing consumer key. (required when provider=ovh and `ovh.secretName` is not provided.)
+    ##
+    consumerKey: ""
+    ## @param ovh.applicationKey When using the OVH provider with an existing application, specify the application key. (required when provider=ovh and `ovh.secretName` is not provided.)
+    ##
+    applicationKey: ""
+    ## @param ovh.applicationSecret When using the OVH provider with an existing application, specify the application secret. (required when provider=ovh and `ovh.secretName` is not provided.)
+    ##
+    applicationSecret: ""
+    ## @param ovh.secretName When using the OVH provider, it's the name of the secret containing `ovh_consumer_key`, `ovh_application_key` and `ovh_application_secret`. Disables usage of other `ovh`.
+    ## with following keys:
+    ##  - ovh_consumer_key
+    ##  - ovh_application_key
+    ##  - ovh_application_secret
+    ## This ignores consumerKey, applicationKey & applicationSecret
+    ##
+    secretName: "ovh-secret"
+
+  domainFilters:
+    - r-eusebio.online
+
+  txtOwnerId: external-dns
+
+  interval: 1m
+  ttl: 300
+  registry: txt

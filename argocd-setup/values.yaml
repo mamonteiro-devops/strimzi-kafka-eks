@@ -1,0 +1,20 @@
+dest_server: https://kubernetes.default.svc
+
+environment: default
+
+app_example:
+  enabled: true
+
+aws_csi_driver:
+  enabled: true
+
+external_dns:
+  enabled: true
+
+metrics_server:
+  enabled: true
+
+kube_prometheus_stack:
+  enabled: true
+
+

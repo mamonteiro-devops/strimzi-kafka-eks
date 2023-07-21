@@ -1,0 +1,38 @@
+{{ if .Values.self_service_kafka.enabled }}
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: kafka-topics
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "11"
+spec:
+  generators:
+  - git:
+      repoURL: https://github.com/mamonteiro-devops/kafka-management.git
+      revision: HEAD
+      files:
+      - path: "./specs/**/*.yaml"
+  template:
+    metadata:
+      name: '{{`{{info.title}}`}}'
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/mamonteiro-devops/kafka-management.git
+        targetRevision: HEAD
+        path: ./.build/charts/topic-management
+        helm:
+          parameters:
+            - name: schemasDirectory
+              value: '{{`specs/{{path.basename}}/schemas`}}'
+          valueFiles: 
+            - '{{`specs/{{path.basename}}/{{path.filename}}`}}'
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: confluent
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+{{ end }}          

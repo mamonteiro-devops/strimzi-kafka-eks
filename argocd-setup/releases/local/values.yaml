@@ -1,0 +1,10 @@
+environment: local
+
+app_example:
+  enabled: false
+
+aws_csi_driver:
+  enabled: false
+
+external_dns:
+  enabled: false

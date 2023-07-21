@@ -1,0 +1,28 @@
+{{ if .Values.app_example.enabled }}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: app-example
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "100"
+  labels:
+    teste: "cenas"
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: app-example
+    server: {{ .Values.dest_server }}
+  project: default
+  source:
+    path: app-example
+    repoURL: https://github.com/mamonteiro-devops/confluent-kafka-eks.git
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+{{ end }}

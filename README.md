@@ -1,1 +1,1 @@
-# strimzi-kafka-eks
+# confluent-kafka-eks
