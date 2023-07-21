@@ -82,7 +82,7 @@ resource "aws_eks_node_group" "eks_ng_public" {
 }
 
 module "argocd" {
-  source = "argocd"
+  source = "./argocd"
   depends_on = [
     aws_eks_cluster.eks-kafka-cluster
   ]

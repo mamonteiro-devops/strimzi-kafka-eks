@@ -21,7 +21,3 @@ resource "helm_release" "argocd_setup" {
     helm_release.argocd
   ]
 }
-
-# resource "kubernetes_manifest" "guestbook" {
-#   manifest = yamldecode(file("./argocd/argo_applications/argo_example.yaml"))
-# }
